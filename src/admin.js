@@ -3,7 +3,6 @@ import  { get, update, logOut } from 'https://divincolato.github.io/src/file.js'
 //chiamata a get() in file.js, metodo che carica i tickets da firebase
 //idealmente bisognerebbe implementare meglio la funzione facendola asincrona
 let tickets= get();
-
 //fix dell'ultimo minuto per avere i tickets in ordine di data e ora, bisognerebbe implementare un metodo per permettere all'utente di ordinarli come vuole
 bubbleSort(tickets);
 function bubbleSort(arr){
@@ -26,6 +25,7 @@ function bubbleSort(arr){
   return arr;
 };
 
+console.log(tickets)
 // Elemento dove verranno messi i ticket creati nel DOM
 const ticketList = document.querySelector("#ticket-list");
 
@@ -35,7 +35,6 @@ let index=0;
 // Cicla attraverso l'array di ticket e crea una riga della tabella per ogni ticket
 tickets.forEach((ticket) => { 
       
-    
     // Crea una nuova riga della tabella
     const tableRow = document.createElement("div");
     //var ticketDetails conterrà l'innerHtml di una "card" ticket
@@ -79,9 +78,12 @@ tickets.forEach((ticket) => {
     <td>${intervento.commentiIntervento}</td>
     
   </tr>`
+  
   });
+
   let dataSubmitTmp = new Date(ticket.dataSubmit.seconds*1000);
 
+    
   ticketDetails+=`
           
           </tbody>
