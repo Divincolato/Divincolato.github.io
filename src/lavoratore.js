@@ -1,4 +1,3 @@
-
 import  { get, update, logOut } from 'https://divincolato.github.io/src/file.js';
 
 let tickets= get();
@@ -173,6 +172,7 @@ window.save_row = function(indexInterventi, indexTicket)
        document.getElementById("bottone"+indexInterventi).setAttribute( "onClick", "edit_row("+indexInterventi+","+indexTicket+");" );
        document.getElementById("bottone"+indexInterventi).value= `Edit`;
       }
+      
       window.logOut = function(){ 
         console.log("a");
         logOut();}
