@@ -34,6 +34,7 @@ function addTicket() {
     cognome: "",
     indirizzo: "",
     lavoratore: "Da Assegnare",
+    dataSubmit: new Date(),
     completato: false,
     interventi:[]
     }
