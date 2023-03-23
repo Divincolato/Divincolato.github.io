@@ -8,7 +8,7 @@ import  { logIn } from 'https://divincolato.github.io/src/file.js';
   if(logIn(loginForm.email.value, loginForm.password.value)){
     window.location.replace("http://www.w3schools.com");}
   
-  
+   
 }
   
  );

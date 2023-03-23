@@ -5,7 +5,7 @@ import  { add, get } from 'https://divincolato.github.io/src/file.js';
 
 
 let tickets= get();
-
+ 
 
 //elementi del dom 
 

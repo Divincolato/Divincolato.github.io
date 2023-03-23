@@ -11,7 +11,7 @@ const ticketList = document.querySelector("#ticket-list");
 let index=0;
 
 // Cicla attraverso l'array di ticket e crea una riga della tabella per ogni ticket
-tickets.forEach((ticket) => {
+tickets.forEach((ticket) => { 
       
     
     // Crea una nuova riga della tabella
@@ -32,7 +32,7 @@ tickets.forEach((ticket) => {
         </ul>
     </div>
 		  <div class="col-md-9"style="padding:15px">
-        <table class="table">
+        <table >
           <thead>
             <tr>
               <th>Categoria</th>

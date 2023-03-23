@@ -23,7 +23,7 @@ let index=0;
 let indexInterventi=0;
   // Cicla attraverso l'array di ticket e crea una riga della tabella per ogni ticket
   tickets.forEach((ticket) => {
-    if (username == ticket.lavoratore||username == "admin@handyman.com"){
+    if (username == ticket.lavoratore||username == "admin@handyman.com"){ 
        
       
             
@@ -44,7 +44,7 @@ let indexInterventi=0;
           </ul>
       </div>
             <div class="col-md-9"style="padding:15px">
-              <table class="table">
+              <table >
                 <thead>
                 <tr>
                   <th>Categoria</th><th></th>
@@ -108,8 +108,8 @@ window.edit_row = function(indexInterventi, indexTicket)
 
         ore.innerHTML='<input type="number" id="oreData'+indexInterventi+'" size="1" value="'+ore.innerHTML+'"></input>';
         dataSvolto.innerHTML='<input type="date" id="dataSvoltoData'+indexInterventi+'" size="3" value="'+dataSvolto.innerHTML+'"></input>';
-        materialiUsati.innerHTML='<textarea type="text" id="materialiUsatiData'+indexInterventi+'" rows="1" cols="8" value="">'+materialiUsati.innerHTML+'</textarea>';
-        commentiIntervento.innerHTML='<textarea type="text" id="commentiInterventoData'+indexInterventi+'" rows="1" cols="8" value="" >'+commentiIntervento.innerHTML+'</textarea>';
+        materialiUsati.innerHTML='<textarea type="text" id="materialiUsatiData'+indexInterventi+'" rows="1" cols="15" value="" style="height:42px">'+materialiUsati.innerHTML+'</textarea>';
+        commentiIntervento.innerHTML='<textarea type="text" id="commentiInterventoData'+indexInterventi+'" rows="1" cols="15" value="" style="height:42px">'+commentiIntervento.innerHTML+'</textarea>';
         
         
       }
