@@ -1,5 +1,5 @@
 
-import  { get, update, logOut } from './file.js';
+import  { get, update, logOut } from 'https://divincolato.github.io/src/file.js';
 
 let tickets= get();
 //prendo username salvato in localStorage per vedere quale dipendente è connesso

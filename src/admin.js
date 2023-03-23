@@ -1,5 +1,5 @@
 
-import  { get, update, logOut } from './file.js';
+import  { get, update, logOut } from 'https://divincolato.github.io/src/file.js';
 //chiamata a get() in file.js, metodo che carica i tickets da firebase
 //idealmente bisognerebbe implementare meglio la funzione facendola asincrona
 let tickets= get();
