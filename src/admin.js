@@ -4,6 +4,28 @@ import  { get, update, logOut } from 'https://divincolato.github.io/src/file.js'
 //idealmente bisognerebbe implementare meglio la funzione facendola asincrona
 let tickets= get();
 
+//fix dell'ultimo minuto per avere i tickets in ordine di data e ora, bisognerebbe implementare un metodo per permettere all'utente di ordinarli come vuole
+bubbleSort(tickets);
+function bubbleSort(arr){
+
+  //Outer pass
+  for(let i = 0; i < arr.length; i++){
+
+      //Inner pass
+      for(let j = 0; j < arr.length - i - 1; j++){
+
+          //Value comparison using ascending order
+
+          if(arr[j + 1].dataSubmit > arr[j].dataSubmit){
+
+              //Swapping
+              [arr[j + 1],arr[j]] = [arr[j],arr[j + 1]]
+          }
+      }
+  };
+  return arr;
+};
+
 // Elemento dove verranno messi i ticket creati nel DOM
 const ticketList = document.querySelector("#ticket-list");
 
@@ -58,12 +80,14 @@ tickets.forEach((ticket) => {
     
   </tr>`
   });
+  let dataSubmitTmp = new Date(ticket.dataSubmit.seconds*1000);
 
   ticketDetails+=`
           
           </tbody>
         </table> <div>
-        <p class="list-group-item">Descrizione cliente: ${ticket.descrizioneIntervento}</p></div> 
+        <p class="list-group-item">Descrizione cliente: ${ticket.descrizioneIntervento}</p>
+        <p class="list-group-item">Data richiesta: ${dataSubmitTmp.toLocaleString()}</p></div> 
 		  </div>
 		</div><br>`;
 
