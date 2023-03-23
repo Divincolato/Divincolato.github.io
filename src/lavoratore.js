@@ -35,7 +35,6 @@ let email = window.localStorage.getItem("email");
 
 let str= email.split('@', 1).join();
 let username = str.charAt(0).toUpperCase() + str.slice(1);
-console.log(username);
 
 // elemento del DOM dove finiranno i ticket
 const ticketList = document.querySelector("#ticket-list");
