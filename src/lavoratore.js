@@ -106,7 +106,7 @@ window.edit_row = function(indexInterventi, indexTicket)
   //così se non modificata l'opzione rimane con lo stesso valore
   //da rifare ciclando e modificando le properties, non usando una String per ogni cosa
 
-        ore.innerHTML='<input type="number" id="oreData'+indexInterventi+'" size="1" value="'+ore.innerHTML+'"></input>';
+        ore.innerHTML='<input type="number" id="oreData'+indexInterventi+'" size="1" style="width: 65px" value="'+ore.innerHTML+'"></input>';
         dataSvolto.innerHTML='<input type="date" id="dataSvoltoData'+indexInterventi+'" size="3" value="'+dataSvolto.innerHTML+'"></input>';
         materialiUsati.innerHTML='<textarea type="text" id="materialiUsatiData'+indexInterventi+'" rows="1" cols="15" value="" style="height:42px">'+materialiUsati.innerHTML+'</textarea>';
         commentiIntervento.innerHTML='<textarea type="text" id="commentiInterventoData'+indexInterventi+'" rows="1" cols="15" value="" style="height:42px">'+commentiIntervento.innerHTML+'</textarea>';
