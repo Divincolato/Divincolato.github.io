@@ -1,115 +1,108 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js'
-			  
-// Add Firebase products that you want to use
-import { getAuth } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
 import { getFirestore, addDoc, collection, getDocs, updateDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js'
-import { ref, getDatabase, set } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js'
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+
 const firebaseConfig = {
 
-apiKey: "AIzaSyDoaW1EppKyx4zXTsIAN5Lr32mulHISbzM",
+  apiKey: "AIzaSyDoaW1EppKyx4zXTsIAN5Lr32mulHISbzM",
 
-authDomain: "handymantickets-15266.firebaseapp.com",
+  authDomain: "handymantickets-15266.firebaseapp.com",
 
-projectId: "handymantickets-15266",
-databaseURL: "https://handymantickets-15266-default-rtdb.firebaseio.com",
-storageBucket: "handymantickets-15266.appspot.com",
+  projectId: "handymantickets-15266",
 
-messagingSenderId: "338544044418",
+  databaseURL: "https://handymantickets-15266-default-rtdb.firebaseio.com",
 
-appId: "1:338544044418:web:062317dbd635242877879b"
+  storageBucket: "handymantickets-15266.appspot.com",
+
+  messagingSenderId: "338544044418",
+
+  appId: "1:338544044418:web:062317dbd635242877879b"
 
 };
 
-
+ 
 // Initialize Firebase
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
 const dbRef = collection(db, "tickets");
+const auth = getAuth(app);
+export const user = null;
 
-let tickets2 = { push: function push(element) { [].push.call(this, element) } };
-tickets2 = [
-  {
-  nome: "Germano",
-  cognome: "Parvetti",
-  indirizzo: "via Pave 9, Trento(TN)",
-  descrizioneIntervento: "Cambiare infissi",
-  contatti:"333-6658452",
-    lavoratore: "Da Assegnare",
-    completato: true,
-  interventi:[{
-      categoria:"Pittura", ore: 3, dataSvolto:"2023-04-25", materialiUsati:"Pennelli",commentiIntervento:"Tutto ok"
-    },{
-      categoria:"Falegnameria", ore: 2, dataSvolto:"2023-03-12", materialiUsati:"Legno",commentiIntervento:"Tutto ok"
-    },{
-      categoria:"Elettrodomestici", ore: 5, dataSvolto:"2022-9-9", materialiUsati:"Microonde",commentiIntervento:"Tutto ok"
-    }]
-  },
-  {
-  nome: "Paolo",
-  cognome: "Bassi",
-  indirizzo: "via Bettini 29, Rovereto(CA)",
-  descrizioneIntervento: "Pittura soffitti, Cambio prese",
-  contatti:"333-6653432",
-    lavoratore: "Luigi",
-    completato: false,
-  interventi:[{
-    categoria:"Pittura", ore: 3, dataSvolto:"2023-04-25", materialiUsati:"Pennelli",commentiIntervento:"Tutto ok"
-  },{
-    categoria:"Falegnameria", ore: 2, dataSvolto:"2023-03-12", materialiUsati:"Legno",commentiIntervento:"Tutto ok"
-  },{
-    categoria:"Elettrodomestici", ore: 5, dataSvolto:"2022-9-9", materialiUsati:"Microonde",commentiIntervento:"Tutto ok"
-  },{  
-    categoria:"Pittura", ore: 3, dataSvolto:"2023-04-25", materialiUsati:"Pennelli",commentiIntervento:"Tutto ok"
-},{
-  categoria:"Falegnameria", ore: 2, dataSvolto:"2023-03-12", materialiUsati:"Legno",commentiIntervento:"Tutto ok"
-},{
-  categoria:"Elettrodomestici", ore: 5, dataSvolto:"2022-9-9", materialiUsati:"Microonde",commentiIntervento:"Tutto ok"
-}]
-  }
-];
 
-//add(tickets2[0]);
-//add(tickets2[1]);
 
+  
+export function logIn(email, password){
+  
+  signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // se l'utente è l'admin mando alla sua pagina, altrimenti mando a lavoratore
+    // sarebbe da fare utilizzando permessi di firestore e bloccando le pagine in modo che un utente non loggato 
+    //non possa scrivere l'indirizzo della pagina ed accedere comunque
+    window.localStorage.setItem("email", user.email);
+    window.location.href = (user.email === 'admin@handyman.com') ? './admin.html' : './lavoratore.html';
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(error.message)
+    window.alert("Errore nell'effettuare il login: "+error.message);
+  });
+}
+export function logOut(){
+
+  signOut(auth).then(() => {
+  // Sign-out successful. 
+  window.alert("Logout effettuato. Verrai reindirizzato alla pagina iniziale");
+  window.location.href = ("./index.html");
+  return;
+}).catch((error) => {
+  // An error happened.
+    const errorMessage = error.message;
+    console.log(error.message)
+    window.alert("Errore nell'effettuare il logout: "+error.message);
+});}
+;
+//funzione che aggiunge un ticket a firestore, 
 export function add(ticket){
 addDoc(dbRef, ticket)
 .then(docRef => {
   let data= {id: docRef.id};  
-  console.log(docRef.id)
   let docRef2 = doc(db, "tickets", docRef.id);
+  
+  //aggiungo il docId univoco del ticket al ticket stesso così da poterlo richiamare singolarmente e modificare
+  //senza dover scaricare ogni volta tutta la collection
   updateDoc(docRef2, data)
   .then(docRef3 => {
-      console.log("A New Document Field has been added to an existing document");
   })
   .catch(error => {
       console.log(error);
   }) 
-        window.alert("Document has been added successfully"+docRef.id);
+        window.alert("La tua richiesta è stata inoltrata con successo, verrai contattato il prima possibile");
 })
 .catch(error => {
     console.log(error);
-    window.alert("Errore nell'aggiungere la richiesta");
+    window.alert("Errore nell'aggiungere la richiesta, riprova");
 })};
-
+//funzione usata per modificare un ticket quando paul o i dipendenti agiscono sui ticket
 export function update(ticket){
   const ticketRef = doc(db, 'tickets', ticket.id);
   updateDoc(ticketRef, ticket).then(docRef => {
-    console.log("A New Document Field has been added to an existing document");
-})
-.catch(error => {
-    console.log(error);
+  })
+  .catch(error => {
+      console.log(error);
 })}
-
+//get della collection asincrono
 const querySnapshot = await getDocs(collection(db, "tickets"));
 
 let tickets= [];
 let index= 0;
+
+//funzione get che cicla ogni documento nella querysnapshot e scarica ogni ticket da firestore
 export function get() {
   
 querySnapshot.forEach((doc) => {
-  console.log("dentro a call"+index);
   tickets[index]= doc.data();
   index++;
 });
@@ -117,4 +110,4 @@ querySnapshot.forEach((doc) => {
 return tickets;
 }
 
-;
+

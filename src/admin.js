@@ -1,5 +1,5 @@
 
-import  { add, get, update } from './file.js';
+import  { get, update, logOut } from './file.js';
 //chiamata a get() in file.js, metodo che carica i tickets da firebase
 //idealmente bisognerebbe implementare meglio la funzione facendola asincrona
 let tickets= get();
@@ -143,10 +143,12 @@ function getTicketCost(ticket) {
 }
 
 //calcolo costo intervento singolo, utilizzato anche da getTicketCost
+//bisognerebbe dare la possiblità di inserire mezz'ore al momento viene usata mezzora come unità di calcolo 
+//ma non è possibile inserire qualcosa di diverso da ore intere
 function getInterventionPrice(intervento)  {
   const handymanServiceCall = 250; // prime due ore+service call
   const additionalTime = 55; // ogni mezzora
-  const interiorPainting = 90; // all'ora
+  const interiorPainting = 45; // ora pittura/2 
   let cost=0;
   
     let rate;
@@ -155,9 +157,12 @@ function getInterventionPrice(intervento)  {
     else if(intervento.ore<=2){return 250;}
     else{rate = additionalTime;}
     
-    cost = handymanServiceCall + rate * (intervento.ore - 2);
+    cost = handymanServiceCall + rate * (intervento.ore*2 - 4);
     
     return cost;
 }
 
 
+window.logOut = function(){ 
+  console.log("a");
+  logOut();}
